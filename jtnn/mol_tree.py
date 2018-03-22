@@ -1,7 +1,7 @@
 import rdkit
 import rdkit.Chem as Chem
 import copy
-from .chemutils import get_clique_mol, tree_decomp, get_mol, get_smiles, set_atommap, enum_assemble, decode_stereo
+from chemutils import get_clique_mol, tree_decomp, get_mol, get_smiles, set_atommap, enum_assemble, decode_stereo
 
 def get_slots(smiles):
     mol = Chem.MolFromSmiles(smiles)
@@ -73,7 +73,7 @@ class MolTreeNode(object):
 
         cands = enum_assemble(self, neighbors)
         if len(cands) > 0:
-            self.cands, self.cand_mols, _ = list(zip(*cands))
+            self.cands, self.cand_mols, _ = zip(*cands)
             self.cands = list(self.cands)
             self.cand_mols = list(self.cand_mols)
         else:
@@ -131,16 +131,12 @@ if __name__ == "__main__":
     lg = rdkit.RDLogger.logger() 
     lg.setLevel(rdkit.RDLogger.CRITICAL)
 
-    def get_vocab():
-        cset = set()
-        for line in sys.stdin:
-            smiles = line.split()[0]
-            mol = MolTree(smiles)
-            for c in mol.nodes:
-                cset.add(c.smiles)
-        for x in cset:
-            print(x)
-
-    smiles = [line.strip("\r\n ") for line in sys.stdin]
-    vocab = Vocab(smiles)
+    cset = set()
+    for line in sys.stdin:
+        smiles = line.split()[0]
+        mol = MolTree(smiles)
+        for c in mol.nodes:
+            cset.add(c.smiles)
+    for x in cset:
+        print x
 
