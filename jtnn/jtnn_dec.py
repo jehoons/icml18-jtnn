@@ -12,7 +12,8 @@ class JTNNDecoder(nn.Module):
 
     def __init__(self, vocab, hidden_size, latent_size, embedding=None):
         super(JTNNDecoder, self).__init__()
-        self.hidden_size = hidden_size
+        latent_size = int(latent_size)
+        self.hidden_size = int(hidden_size)
         self.vocab_size = vocab.size()
         self.vocab = vocab
 
