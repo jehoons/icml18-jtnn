@@ -22,4 +22,4 @@ for i in range(len(smiles)):
 smiles = list(zip(smiles, targets))
 smiles = sorted(smiles, key=lambda x:x[1])
 for x,y in smiles:
-    print(x,y)
+    print((x,y))
